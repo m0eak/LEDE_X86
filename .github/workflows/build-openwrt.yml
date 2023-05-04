@@ -74,7 +74,7 @@ jobs:
       
     - name: Modify feeds
       run: |
-        chmod +x $DIY_P1.5_SH
+        chmod +x $DIY_P1_5_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_5_SH
       

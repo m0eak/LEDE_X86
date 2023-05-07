@@ -167,10 +167,8 @@ jobs:
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
-          if [[ $line =~ ^CONFIG_PACKAGE_luci.*=y$ ]]; then
-          package=$(echo "$line" | sed -r 's/^CONFIG_PACKAGE_(.*)=y$/\1/')
-          echo "$package" >>release.txt
-          fi
+        grep -E '^[^#].*luci-app-.*=y$' ./openwrt/.config | grep -v INCLUDE | sed 's/^\(.*=\)y$/\1/' >> release.txt
+        sed -i 's/^[^l]*luci-app-/luci-app-/g;s/=//g' release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT

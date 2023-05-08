@@ -165,7 +165,8 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        #echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         touch release.txt
         grep -E '^[^#].*luci-app-.*=y$' ./openwrt/.config | grep -v INCLUDE | sed 's/^\(.*=\)y$/\1/' >> release.txt
         sed -i 's/^[^l]*luci-app-/luci-app-/g;s/=//g' release.txt
